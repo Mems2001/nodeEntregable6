@@ -1,5 +1,5 @@
-const db = require('../utils/dataBase');
 const {DataTypes} = require('sequelize');
+const db = require('../utils/dataBase');
 
 const Users = db.define('users' , {
     id: {
@@ -11,7 +11,7 @@ const Users = db.define('users' , {
         allowNull: false ,
         field: 'first_name' ,
         validate: {
-            len: [2 , 50]
+            len: [1 , 50]
         }
     } ,
     lastName: {
@@ -19,7 +19,7 @@ const Users = db.define('users' , {
         allowNull: false ,
         field: 'last_name' ,
         validate: {
-            len: [2 , 50]
+            len: [1 , 50]
         }
     } ,
     email: {
@@ -71,7 +71,8 @@ const Users = db.define('users' , {
     } ,
     isVerified: {
         type: DataTypes.BOOLEAN ,
-        defaultValue: false
+        defaultValue: false ,
+        field: 'is_verified'
     }
 });
 

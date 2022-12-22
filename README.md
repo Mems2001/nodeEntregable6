@@ -11,7 +11,7 @@
 
 - /posts
     - /me 
-    - /followers
+    - /followers (optional)
     - /user/:user_id
     - /:post_id
     - /:post_id/comments
