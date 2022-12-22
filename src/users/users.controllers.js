@@ -4,7 +4,7 @@ const uuid = require('uuid');
 
 const findAllUsers = async() => {
     return await Users.findAll()
-}
+};
 
 const findUserByEmail = async (email) => {
     const data = await Users.findOne({
@@ -19,6 +19,32 @@ const findUserById = async(id) => {
     return await Users.findOne({
         where: {
             id
+        } ,
+        attributes: {
+            exclude: [
+                'password' ,
+                'role' ,
+                'status' ,
+                'isVerified' ,
+                'email' ,
+                'phone'
+            ]
+        }
+    })
+};
+
+const findMyUser = async(id) => {
+    return await Users.findOne({
+        where: {
+            id
+        } ,
+        attributes: {
+            exclude: [
+                'role' ,
+                'status' ,
+                'isVerified' ,
+                'password'
+            ]
         }
     })
 };
@@ -38,9 +64,20 @@ const createUser = async(obj) => {
     })
 } ;
 
+const destroyUser = async(id) => {
+    const data = await Users.destroy({
+        where: {
+            id
+        }
+    });
+    return data
+};
+
 module.exports = {
     findAllUsers ,
     findUserByEmail ,
     findUserById ,
-    createUser
+    findMyUser ,
+    createUser ,
+    destroyUser
 }

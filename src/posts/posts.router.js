@@ -9,11 +9,15 @@ router.route('/me')
     .get(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.getMyposts)
 
 router.route('/:post_id')
-    .get(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.getPostById)
+    .get(postsServices.getPostById)
     .patch(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.patchMyPost)
     .delete(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.deleteMyPost)
 
+router.route('/:post_id/comments')
+    .get(postsServices.getCommentsFromPost)
+    .post(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.postComment)
+
 router.route('/users/:user_id')
-    .get(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.getOtherUserPosts)
+    .get(postsServices.getOtherUserPosts)
 
 module.exports = router

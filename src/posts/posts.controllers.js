@@ -1,6 +1,8 @@
 const Posts = require('../models/posts.model');
 const uuid = require('uuid');
 const Users = require('../models/users.model');
+const { findUserById } = require('../users/users.controllers');
+const Comments = require('../models/comments.model');
 
 const createPost = async(obj) => {
     const newPost = await Posts.create({
@@ -74,14 +76,65 @@ const destroyMyPost = async(obj) => {
 };
 
 const findOtherUserPosts = async(id) => {
-    return await Posts.findAll({
+    try {
+        const user = await findUserById(id);
+        // console.log(user)
+        if (user) {
+            return await Posts.findAll({
+                where: {
+                    userId: id
+                } ,
+                attributes: {
+                    exclude: [
+                        'userId'
+                    ]
+                }
+            })
+        } else {
+            return 'notUser'
+        }
+    } catch (error) {
+        return null
+    }
+};
+
+// Comments controllers
+const createComment = async(obj) => {
+    const data = await Comments.create({
+        id: uuid.v4() ,
+        postId: obj.postId ,
+        userId: obj.userId ,
+        content: obj.content
+    });
+    return data
+};
+
+const findCommentsFromPost = async(postId) => {
+    return await Comments.findAll({
         where: {
-            userId: id
+            postId
         } ,
         attributes: {
             exclude: [
+                'postId' ,
                 'userId'
             ]
+        } ,
+        include: {
+            model: Users ,
+            attributes: {
+                exclude: [
+                    'password' ,
+                    'email' ,
+                    'phone' ,
+                    'role' ,
+                    'status' ,
+                    'isVerified' ,
+                    'createdAt' ,
+                    'updatedAt' ,
+                    'birthday'
+                ]
+            }
         }
     })
 };
@@ -92,5 +145,8 @@ module.exports = {
     findPostById ,
     updateMyPost ,
     destroyMyPost ,
-    findOtherUserPosts
+    findOtherUserPosts ,
+    // Comments
+    createComment ,
+    findCommentsFromPost
 }

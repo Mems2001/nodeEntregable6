@@ -36,7 +36,13 @@ const getPostById = (req ,res) => {
 
     postsControllers.findPostById(id)
         .then(data => {
-            res.status(200).json(data)
+            if (data) {
+                res.status(200).json(data)
+            } else {
+                res.status(404).json({
+                    message: 'Invalid ID'
+                })
+            }
         })
         .catch(err => {
             res.status(400).json({
@@ -101,6 +107,45 @@ const getOtherUserPosts = (req , res) => {
 
     postsControllers.findOtherUserPosts(id)
         .then(data => {
+            if (data && data !== 'notUser') {
+                res.status(200).json(data)
+            } else if (data == 'notUser') {
+                res.status(404).json({
+                    message: 'Invalid ID'
+                })
+            }
+        })
+        .catch(err => {
+            res.status(400).json({
+                message: err.message
+            })
+        })
+};
+
+// Comments services
+const postComment = (req, res) => {
+    const postId = req.params.post_id ;
+    const userId = req.user.id ;
+    const {content} = req.body ;
+
+    postsControllers.createComment({
+        postId , userId , content
+    })
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            res.status(400).json({
+                message: err.message
+            })
+        })
+};
+
+const getCommentsFromPost = (req ,res) => {
+    const postId = req.params.post_id;
+
+    postsControllers.findCommentsFromPost(postId)
+        .then(data => {
             res.status(200).json(data)
         })
         .catch(err => {
@@ -116,5 +161,8 @@ module.exports = {
     getPostById ,
     patchMyPost ,
     deleteMyPost ,
-    getOtherUserPosts
+    getOtherUserPosts ,
+    // Comments
+    postComment ,
+    getCommentsFromPost
 }
