@@ -5,7 +5,8 @@ module.exports = {
         port: process.env.PORT ,
         host: process.env.HOST ,
         JwtSecret: process.env.JWT_KEY ,
-        emailPass: process.env.MAIL_PASS
+        emailPass: process.env.MAIL_PASS ,
+        email: process.env.MAIL
     } ,
     db: {
         host: process.env.DB_HOST ,

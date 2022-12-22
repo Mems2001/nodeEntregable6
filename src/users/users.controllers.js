@@ -73,11 +73,20 @@ const destroyUser = async(id) => {
     return data
 };
 
+const updateUser = async(obj , userId) => {
+    return await Users.update(obj , {
+        where: {
+            id: userId
+        }
+    })
+};
+
 module.exports = {
     findAllUsers ,
     findUserByEmail ,
     findUserById ,
     findMyUser ,
     createUser ,
-    destroyUser
+    destroyUser ,
+    updateUser
 }

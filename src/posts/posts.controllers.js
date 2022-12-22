@@ -4,10 +4,10 @@ const Users = require('../models/users.model');
 const { findUserById } = require('../users/users.controllers');
 const Comments = require('../models/comments.model');
 
-const createPost = async(obj) => {
+const createPost = async(obj , userId) => {
     const newPost = await Posts.create({
         id: uuid.v4() ,
-        userId: obj.userId ,
+        userId ,
         content: obj.content
     });
     return newPost
@@ -55,11 +55,11 @@ const findPostById = async(id) => {
     })
 };
 
-const updateMyPost = async(obj) => {
+const updateMyPost = async(obj , userId , postId) => {
     const data = await Posts.update(obj , {
         where: {
-            id : obj.postId ,
-            userId : obj.userId
+            id : postId ,
+            userId : userId
         }
     });
     return data[0]

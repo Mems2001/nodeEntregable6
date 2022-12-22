@@ -5,8 +5,8 @@ const postPost = (req , res) => {
     const userId = req.user.id;
 
     postsControllers.createPost({
-        content , userId
-    })
+        content
+    } , userId)
         .then(data => {
             res.status(201).json(data)
         })
@@ -57,8 +57,8 @@ const patchMyPost = (req , res) => {
     const {content} = req.body;
 
     postsControllers.updateMyPost({
-        postId , userId , content
-    })
+       content
+    } , userId , postId)
         .then(data => {
             if (data !== 0) {
                 res.status(201).json({
