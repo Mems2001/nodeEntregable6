@@ -17,6 +17,18 @@ const postPost = (req , res) => {
         })
 };
 
+const getAllPosts = (req , res) => {
+    postsControllers.findAllPosts()
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            res.status(400).json({
+                message: err.message
+            })
+        })
+};
+
 const getMyposts = (req , res) => {
     const id = req.user.id;
 
@@ -155,8 +167,45 @@ const getCommentsFromPost = (req ,res) => {
         })
 };
 
+// Post Likes services
+const getAllLikesFromPost = (req , res) => {
+    const postId = req.params.post_id 
+
+    postsControllers.findAllLikesFromPost(postId)
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            res.status(400).json({
+                message: err.message
+            })
+        })
+};
+
+const postPostLike = (req , res) => {
+    const postId = req.params.post_id ;
+    const userId = req.user.id ;
+
+    postsControllers.createPostLike(userId , postId)
+        .then(data => {
+            if (data) {
+                res.status(201).json(data)
+            } else {
+                res.status(400).json({
+                    message: 'You already liked this post'
+                })
+            }
+        })
+        .catch(err => {
+            res.status(400).json({
+                message: err.message
+            })
+        })
+};
+
 module.exports = {
     postPost ,
+    getAllPosts ,
     getMyposts ,
     getPostById ,
     patchMyPost ,
@@ -164,5 +213,8 @@ module.exports = {
     getOtherUserPosts ,
     // Comments
     postComment ,
-    getCommentsFromPost
+    getCommentsFromPost ,
+    // Post likes
+    getAllLikesFromPost ,
+    postPostLike
 }

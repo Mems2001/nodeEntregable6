@@ -3,6 +3,7 @@ const uuid = require('uuid');
 const Users = require('../models/users.model');
 const { findUserById } = require('../users/users.controllers');
 const Comments = require('../models/comments.model');
+const PostLikes = require('../models/postLikes.model');
 
 const createPost = async(obj , userId) => {
     const newPost = await Posts.create({
@@ -11,6 +12,10 @@ const createPost = async(obj , userId) => {
         content: obj.content
     });
     return newPost
+};
+
+const findAllPosts = async() => {
+    return await Posts.findAll()
 };
 
 const findMyPosts = async(id) => {
@@ -139,8 +144,70 @@ const findCommentsFromPost = async(postId) => {
     })
 };
 
+// Post likes controllers
+const findAllLikesFromPost = async(postId) => {
+    return await PostLikes.findAll({
+        where: {
+            postId
+        } ,
+        include: {
+            model: Posts ,
+            attributes: {
+                exclude: [
+                    'userId' ,
+                    'createdAt' ,
+                    'updatedAt'
+                ]
+            } ,
+            include: {
+                model: Users ,
+                attributes: {
+                    exclude: [
+                        'email' ,
+                        'password' ,
+                        'birthday' ,
+                        'phone' ,
+                        'role' ,
+                        'status' ,
+                        'createdAt' ,
+                        'updatedAt' ,
+                        'isVerified'
+                    ]
+                }
+            }
+        } ,
+        attributes: {
+            exclude: [
+                'postId' ,
+                'userId'
+            ]
+        }
+    })
+};
+
+const createPostLike = async(userId, postId) => {
+    const verify = await PostLikes.findOne({
+        where: {
+            userId ,
+            postId
+        }
+    });
+
+    if (!verify) {
+        return await PostLikes.create({
+            id: uuid.v4() ,
+            postId ,
+            userId
+        })
+    } else {
+        return null
+    }
+
+};
+
 module.exports = {
     createPost ,
+    findAllPosts ,
     findMyPosts ,
     findPostById ,
     updateMyPost ,
@@ -148,5 +215,8 @@ module.exports = {
     findOtherUserPosts ,
     // Comments
     createComment ,
-    findCommentsFromPost
+    findCommentsFromPost ,
+    // Post likes
+    findAllLikesFromPost ,
+    createPostLike
 }

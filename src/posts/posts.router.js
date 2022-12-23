@@ -3,6 +3,7 @@ const router = require('express').Router();
 const PassportJWT = require('../middleware/auth.middleware');
 
 router.route('/')
+    .get(postsServices.getAllPosts)
     .post(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.postPost)
 
 router.route('/me')
@@ -16,6 +17,10 @@ router.route('/:post_id')
 router.route('/:post_id/comments')
     .get(postsServices.getCommentsFromPost)
     .post(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.postComment)
+
+router.route('/:post_id/likes')
+    .get(postsServices.getAllLikesFromPost)
+    .post(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.postPostLike)
 
 router.route('/users/:user_id')
     .get(postsServices.getOtherUserPosts)
