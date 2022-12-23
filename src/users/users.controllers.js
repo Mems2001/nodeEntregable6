@@ -74,11 +74,12 @@ const destroyUser = async(id) => {
 };
 
 const updateUser = async(obj , userId) => {
-    return await Users.update(obj , {
+    const data = await Users.update(obj , {
         where: {
             id: userId
         }
-    })
+    });
+    return data[0]
 };
 
 module.exports = {

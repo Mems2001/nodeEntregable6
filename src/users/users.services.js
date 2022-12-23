@@ -90,6 +90,75 @@ const deleteUser = (req, res) => {
         .then(data => {
             if (data) {
                 res.status(200).json({
+                    message: `User ${id} deleted`
+                })
+            } else {
+                res.status(404).json({
+                    message: `User ${id} not found`
+                })
+            }
+        })
+        .catch(err => {
+            res.status(400).json({
+                message: err.message
+            })
+        })
+};
+
+const patchUser = (req , res) => {
+    const id = req.params.user_id;
+    const {firstName , lastName , email , nickName , birthday , phone , profileImage , gender} = req.body;
+
+    usersControllers.updateUser({
+        firstName , lastName , email , nickName , birthday , phone , profileImage , gender
+    } , id)
+        .then(data => {
+            if (data !== 0) {
+                res.status(200).json({
+                    message: `User ${id} updated`
+                })
+            } else if (data == 0) {
+                res.status(400).json({
+                    message: `User ${id} not found`
+                })
+            }
+        })
+        .catch()
+};
+
+// My user services
+const patchMyUser = (req, res) => {
+    const id = req.user.id;
+    const {firstName , lastName , email , nickName , birthday , phone , profileImage , gender} = req.body;
+
+    usersControllers.updateUser({
+        firstName , lastName , email , nickName , birthday , phone , profileImage , gender
+    } , id)
+        .then(data => {
+            if (data !== 0) {
+                res.status(200).json({
+                    message: 'User updated'
+                })
+            } else if (data == 0) {
+                res.status(400).json({
+                    message: 'Unable to update'
+                })
+            }
+        })
+        .catch(err => {
+            res.status(400).json({
+                message: err.message
+            })
+        })
+};
+
+const deleteMyUser = (req , res) => {
+    const id = req.user.id;
+
+    usersControllers.destroyUser(id)
+        .then(data => {
+            if (data) {
+                res.status(200).json({
                     message: 'User deleted'
                 })
             } else {
@@ -110,5 +179,8 @@ module.exports = {
     getAllUsers ,
     getMyUser ,
     getUserById ,
-    deleteUser
+    deleteUser ,
+    patchMyUser ,
+    deleteMyUser ,
+    patchUser
 }
