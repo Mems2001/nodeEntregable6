@@ -15,7 +15,29 @@ const createPost = async(obj , userId) => {
 };
 
 const findAllPosts = async() => {
-    return await Posts.findAll()
+    return await Posts.findAll({
+        include: {
+            model: Users ,
+            attributes: {
+                exclude: [
+                    'email' ,
+                    'password' ,
+                    'birthday' ,
+                    'phone' ,
+                    'createdAt' ,
+                    'updatedAt' ,
+                    'role' ,
+                    'status' ,
+                    'isVerified'
+                ]
+            }
+        } ,
+        attributes: {
+            exclude: [
+                'userId'
+            ]
+        }
+    })
 };
 
 const findMyPosts = async(id) => {
@@ -144,36 +166,26 @@ const findCommentsFromPost = async(postId) => {
     })
 };
 
-// Post likes controllers
+// Posts likes controllers
 const findAllLikesFromPost = async(postId) => {
     return await PostLikes.findAll({
         where: {
             postId
         } ,
         include: {
-            model: Posts ,
+            model: Users ,
             attributes: {
                 exclude: [
-                    'userId' ,
+                    'email' ,
+                    'password' ,
+                    'birthday' ,
+                    'phone' ,
+                    'role' ,
+                    'status' ,
                     'createdAt' ,
-                    'updatedAt'
+                    'updatedAt' ,
+                    'isVerified'
                 ]
-            } ,
-            include: {
-                model: Users ,
-                attributes: {
-                    exclude: [
-                        'email' ,
-                        'password' ,
-                        'birthday' ,
-                        'phone' ,
-                        'role' ,
-                        'status' ,
-                        'createdAt' ,
-                        'updatedAt' ,
-                        'isVerified'
-                    ]
-                }
             }
         } ,
         attributes: {
@@ -204,6 +216,8 @@ const createPostLike = async(userId, postId) => {
     }
 
 };
+
+// Comments likes
 
 module.exports = {
     createPost ,

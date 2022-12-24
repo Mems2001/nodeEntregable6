@@ -14,13 +14,13 @@ router.route('/:post_id')
     .patch(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.patchMyPost)
     .delete(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.deleteMyPost)
 
-router.route('/:post_id/comments')
-    .get(postsServices.getCommentsFromPost)
-    .post(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.postComment)
-
 router.route('/:post_id/likes')
     .get(postsServices.getAllLikesFromPost)
     .post(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.postPostLike)
+
+router.route('/:post_id/comments')
+    .get(postsServices.getCommentsFromPost)
+    .post(PassportJWT.authenticate('jwt' , {session:false}) , postsServices.postComment)
 
 router.route('/users/:user_id')
     .get(postsServices.getOtherUserPosts)

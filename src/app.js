@@ -8,6 +8,7 @@ const db = require('./utils/dataBase');
 const authRouter = require('./auth/auth.router');
 const usersRouter = require('./users/users.router');
 const postsRouter = require('./posts/posts.router');
+const commentsRouter = require('./comments/comments.router');
 
 app.use(express.json());
 
@@ -39,6 +40,7 @@ app.get('/' , (req ,res) => {
 app.use('/api/v1/auth' , authRouter);
 app.use('/api/v1/users' , usersRouter);
 app.use('/api/v1/posts' , postsRouter);
+app.use('/api/v1/comments' , commentsRouter);
 
 app.listen(config.api.port , () => {
     console.log(`Server started at port:${config.api.port}`)
