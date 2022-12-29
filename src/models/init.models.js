@@ -33,7 +33,6 @@ const initModels = () => {
     })
 
     //Followed
-    Users.hasMany(Follows)
     Follows.belongsTo(Users, {
         as: 'followed' ,
         foreignKey: 'userId'
