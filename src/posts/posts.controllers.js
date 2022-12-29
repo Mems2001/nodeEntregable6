@@ -168,7 +168,7 @@ const findCommentsFromPost = async(postId) => {
 
 // Posts likes controllers
 const findAllLikesFromPost = async(postId) => {
-    return await PostLikes.findAll({
+    const data = await PostLikes.findAll({
         where: {
             postId
         } ,
@@ -194,7 +194,8 @@ const findAllLikesFromPost = async(postId) => {
                 'userId'
             ]
         }
-    })
+    });
+    return data.map(like => like.user)
 };
 
 const createPostLike = async(userId, postId) => {
@@ -212,7 +213,12 @@ const createPostLike = async(userId, postId) => {
             userId
         })
     } else {
-        return null
+        const data = await PostLikes.destroy({
+            where: {
+                id: verify.id
+            }
+        });
+        return data
     }
 
 };

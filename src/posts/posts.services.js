@@ -173,7 +173,10 @@ const getAllLikesFromPost = (req , res) => {
 
     postsControllers.findAllLikesFromPost(postId)
         .then(data => {
-            res.status(200).json(data)
+            res.status(200).json({
+                count: data.length ,
+                likes: data
+            })
         })
         .catch(err => {
             res.status(400).json({

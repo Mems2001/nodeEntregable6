@@ -1,4 +1,5 @@
 const Comments = require("./comments.model");
+const Follows = require("./follows.model");
 const PasswordRecovery = require("./passwordRecovery.model");
 const PostLikes = require("./postLikes.model");
 const Posts = require("./posts.model");
@@ -23,6 +24,20 @@ const initModels = () => {
 
     Posts.hasMany(Comments)
     Comments.belongsTo(Posts)
+
+    //Followers
+    Users.hasMany(Follows)
+    Follows.belongsTo(Users , {
+        as: 'follower' ,
+        foreignKey: 'user2Id'
+    })
+
+    //Followed
+    Users.hasMany(Follows)
+    Follows.belongsTo(Users, {
+        as: 'followed' ,
+        foreignKey: 'userId'
+    })
 
 };
 

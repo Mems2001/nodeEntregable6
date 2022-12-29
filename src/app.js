@@ -5,6 +5,7 @@ const config = require('../config');
 const initModels = require('./models/init.models');
 const db = require('./utils/dataBase');
 //Router
+const followsRouter = require('./follows/follows.router');
 const authRouter = require('./auth/auth.router');
 const usersRouter = require('./users/users.router');
 const postsRouter = require('./posts/posts.router');
@@ -37,6 +38,7 @@ app.get('/' , (req ,res) => {
 });
 
     // Routes
+app.use('/api/v1' , followsRouter);
 app.use('/api/v1/auth' , authRouter);
 app.use('/api/v1/users' , usersRouter);
 app.use('/api/v1/posts' , postsRouter);

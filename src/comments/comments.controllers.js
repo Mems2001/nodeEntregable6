@@ -101,16 +101,43 @@ const createCommentLike = async(userId , commentId) => {
             commentId
         })
     } else {
-        return null
+        const data = await CommentLikes.destroy({
+            where: {
+                id: verify.id
+            }
+        });
+        return data
     }
 };
 
 const findAllLikesFromComment = async(commentId) => {
-    return await CommentLikes.findAll({
+    const data = await CommentLikes.findAll({
         where: {
             commentId
+        } ,
+        include: {
+            model: Users ,
+            attributes: {
+                exclude: [
+                    'createdAt' ,
+                    'updatedAt' ,
+                    'password' ,
+                    'email' ,
+                    'phone' ,
+                    'birthday' ,
+                    'status' ,
+                    'role' ,
+                    'isVerified'
+                ]
+            }
+        } ,
+        attributes: {
+            exclude: [
+                'userId'
+            ]
         }
-    })
+    });
+    return Map.data(like => like.user)
 };
 
 module.exports = {
