@@ -3,7 +3,7 @@ const uuid = require('uuid');
 const Users = require('../models/users.model');
 const { findUserById } = require('../users/users.controllers');
 const Comments = require('../models/comments.model');
-const PostLikes = require('../models/postLikes.model');
+const PostLikes = require('../models/Plikes');
 
 const createPost = async(obj , userId) => {
     const newPost = await Posts.create({
