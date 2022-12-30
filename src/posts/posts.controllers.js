@@ -3,7 +3,7 @@ const uuid = require('uuid');
 const Users = require('../models/users.model');
 const { findUserById } = require('../users/users.controllers');
 const Comments = require('../models/comments.model');
-const PostLikes = require('../models/Plikes');
+const Plikes = require('../models/Plikes');
 
 const createPost = async(obj , userId) => {
     const newPost = await Posts.create({
@@ -168,7 +168,7 @@ const findCommentsFromPost = async(postId) => {
 
 // Posts likes controllers
 const findAllLikesFromPost = async(postId) => {
-    const data = await PostLikes.findAll({
+    const data = await Plikes.findAll({
         where: {
             postId
         } ,
@@ -199,7 +199,7 @@ const findAllLikesFromPost = async(postId) => {
 };
 
 const createPostLike = async(userId, postId) => {
-    const verify = await PostLikes.findOne({
+    const verify = await Plikes.findOne({
         where: {
             userId ,
             postId
@@ -207,13 +207,13 @@ const createPostLike = async(userId, postId) => {
     });
 
     if (!verify) {
-        return await PostLikes.create({
+        return await Plikes.create({
             id: uuid.v4() ,
             postId ,
             userId
         })
     } else {
-        const data = await PostLikes.destroy({
+        const data = await Plikes.destroy({
             where: {
                 id: verify.id
             }
