@@ -3,7 +3,7 @@ const app = express();
 
 const config = require('../config');
 const initModels = require('./models/init.models');
-const db = require('./utils/dataBase');
+const db = require('./utils/database');
 //Router
 const followsRouter = require('./follows/follows.router');
 const authRouter = require('./auth/auth.router');
