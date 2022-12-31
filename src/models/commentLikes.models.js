@@ -1,7 +1,7 @@
 const db = require('../utils/dataBase');
 const {DataTypes} = require('sequelize');
-const Users = require('./users.model');
-const Comments = require('./comments.model');
+const Users = require('./users.models');
+const Comments = require('./comments.models');
 
 const CommentLikes = db.define('comment_likes' , {
     id: {

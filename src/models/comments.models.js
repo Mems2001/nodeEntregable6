@@ -1,32 +1,35 @@
 const db = require('../utils/dataBase');
 const {DataTypes} = require('sequelize');
-const Users = require('./users.model');
+const Users = require('./users.models');
+const Posts = require('./posts.models');
 
-const Follows = db.define('follows' , {
+const Comments = db.define('comments' , {
     id: {
         type: DataTypes.UUID ,
         primaryKey: true
     } ,
+    content: {
+        type: DataTypes.TEXT ,
+        allowNull: false
+    } ,
     userId: {
         type: DataTypes.UUID ,
         allowNull: false ,
-        field: 'followed' ,
+        field: 'user_id' ,
         references: {
             key: 'id' ,
             model: Users
-        } ,
-        comment: 'followed'
+        }
     } ,
-    user2Id: {
+    postId: {
         type: DataTypes.UUID ,
         allowNull: false ,
-        field: 'follower' ,
+        field: 'post_id' ,
         references: {
             key: 'id' ,
-            model: Users
-        } ,
-        comment: 'follower'
+            model: Posts
+        }
     }
 });
 
-module.exports = Follows
+module.exports = Comments

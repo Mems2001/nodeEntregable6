@@ -1,6 +1,6 @@
-const Follows = require('../models/follows.model');
+const Follows = require('../models/follows.models');
 const uuid = require('uuid');
-const Users = require('../models/users.model');
+const Users = require('../models/users.models');
 
 const followUser = async(followerId , followedId) => {
     const verify = await Follows.findOne({

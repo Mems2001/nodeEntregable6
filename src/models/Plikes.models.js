@@ -1,7 +1,7 @@
 const db = require('../utils/dataBase');
 const {DataTypes} = require('sequelize');
-const Posts = require('./posts.model');
-const Users = require('./users.model');
+const Posts = require('./posts.models');
+const Users = require('./users.models');
 
 const PostLikes = db.define('post_likes' , {
     id: {

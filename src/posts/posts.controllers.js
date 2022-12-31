@@ -1,9 +1,9 @@
-const Posts = require('../models/posts.model');
+const Posts = require('../models/posts.models');
 const uuid = require('uuid');
-const Users = require('../models/users.model');
+const Users = require('../models/users.models');
 const { findUserById } = require('../users/users.controllers');
-const Comments = require('../models/comments.model');
-const Plikes = require('../models/Plikes');
+const Comments = require('../models/comments.models');
+const Plikes = require('../models/Plikes.models');
 
 const createPost = async(obj , userId) => {
     const newPost = await Posts.create({

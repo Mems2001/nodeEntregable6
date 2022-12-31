@@ -1,8 +1,8 @@
-const Comments = require('../models/comments.model');
+const Comments = require('../models/comments.models');
 const uuid = require('uuid');
-const Posts = require('../models/posts.model');
-const Users = require('../models/users.model');
-const CommentLikes = require('../models/commentLikes.model');
+const Posts = require('../models/posts.models');
+const Users = require('../models/users.models');
+const CommentLikes = require('../models/commentLikes.models');
 
 const findMyComments = async(userId) => {
     return await Comments.findAll({

@@ -1,4 +1,4 @@
-const PasswordRecovery = require("../models/passwordRecovery.model");
+const PasswordRecovery = require("../models/passwordRecovery.models");
 const { findUserByEmail, updateUser } = require("../users/users.controllers");
 const { comparePass, hashPass } = require("../utils/crypto");
 const uuid = require('uuid');
