@@ -1,4 +1,4 @@
-const db = require('../utils/database');
+const db = require('../utils/dataBase');
 const {DataTypes} = require('sequelize');
 const Posts = require('./posts.model');
 const Users = require('./users.model');
