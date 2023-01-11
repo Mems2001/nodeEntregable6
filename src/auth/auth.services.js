@@ -50,8 +50,8 @@ const postRecoveryToken = (req, res) => {
             .then(async(data) => {
                 if (data) {
                     await mailer.sendMail({
-                        from: `<${config.api.email}>` ,
-                        to: `<${email}>` ,
+                        from: config.api.email ,
+                        to: email ,
                         subject: 'Password Recovery' ,
                         html: `<a href='${config.api.host}/api/v1/auth/password_recovery/${data.id}'>Password recovery link</a>`
                     });
